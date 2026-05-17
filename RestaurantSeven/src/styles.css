@@ -59,43 +59,36 @@
 :root {
   --radius: 4px;
 
-  /* Blush Linen & Burgundy palette */
-  --background: oklch(0.25 0.08 15);
-  /* deep burgundy background */
-  --foreground: oklch(0.95 0.03 30);
-  /* blush linen text */
-  --cream: oklch(0.95 0.03 30);
-  /* blush linen */
-  --emerald-deep: oklch(0.18 0.06 15);
-  /* darkest burgundy */
-  --emerald: oklch(0.35 0.12 15);
-  /* rich burgundy */
-  --gold: oklch(0.80 0.08 30);
-  /* rose gold / blush accent */
-  --gold-soft: oklch(0.90 0.04 30);
-  /* soft blush accent */
+  /* Dark Forest Green & Warm Gold palette */
+  --background: oklch(0.18 0.06 155);          /* deep forest green background */
+  --foreground: oklch(0.95 0.02 90);           /* warm cream text */
+  --cream: oklch(0.95 0.02 90);                /* warm cream */
+  --emerald-deep: oklch(0.13 0.05 155);        /* darkest forest green */
+  --emerald: oklch(0.30 0.08 155);             /* rich forest green */
+  --gold: oklch(0.75 0.14 85);                 /* warm amber gold */
+  --gold-soft: oklch(0.85 0.10 85);            /* soft amber glow */
 
-  --card: oklch(0.28 0.09 15);
+  --card: oklch(0.22 0.07 155);                /* slightly lighter green cards */
   --card-foreground: var(--cream);
-  --popover: oklch(0.28 0.09 15);
+  --popover: oklch(0.22 0.07 155);
   --popover-foreground: var(--cream);
 
   --primary: var(--gold);
-  --primary-foreground: oklch(0.25 0.08 15);
+  --primary-foreground: oklch(0.15 0.05 155);
   --secondary: var(--emerald-deep);
   --secondary-foreground: var(--cream);
-  --muted: oklch(0.32 0.08 15);
-  --muted-foreground: oklch(0.80 0.04 30);
+  --muted: oklch(0.25 0.06 155);
+  --muted-foreground: oklch(0.70 0.04 90);
   --accent: var(--gold);
-  --accent-foreground: oklch(0.25 0.08 15);
+  --accent-foreground: oklch(0.15 0.05 155);
   --destructive: oklch(0.55 0.22 27);
   --destructive-foreground: var(--cream);
-  --border: oklch(0.95 0.03 30 / 0.12);
-  --input: oklch(0.95 0.03 30 / 0.15);
+  --border: oklch(0.95 0.02 90 / 0.12);
+  --input: oklch(0.95 0.02 90 / 0.15);
   --ring: var(--gold);
 
-  --shadow-elegant: 0 30px 80px -30px oklch(0 0 0 / 0.6);
-  --gradient-emerald: linear-gradient(135deg, oklch(0.25 0.08 15), oklch(0.35 0.10 15));
+  --shadow-elegant: 0 30px 80px -30px oklch(0 0 0 / 0.7);
+  --gradient-emerald: linear-gradient(135deg, oklch(0.13 0.05 155), oklch(0.25 0.08 155));
 }
 
 .dark {
