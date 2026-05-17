@@ -1,6 +1,4 @@
-import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
 const schema = z.object({
   name: z.string().min(1).max(120),
@@ -11,20 +9,10 @@ const schema = z.object({
   notes: z.string().max(1000).optional().nullable(),
 });
 
-export const createReservation = createServerFn({ method: "POST" })
-  .inputValidator((input: unknown) => schema.parse(input))
-  .handler(async ({ data }) => {
-    const { error } = await supabaseAdmin.from("reservations").insert({
-      name: data.name,
-      email: data.email,
-      reservation_date: data.reservation_date,
-      seating: data.seating,
-      guests: data.guests,
-      notes: data.notes ?? null,
-    });
-    if (error) {
-      console.error("reservation insert failed", error);
-      throw new Error("Could not save reservation");
-    }
-    return { ok: true };
-  });
+export type ReservationInput = z.infer<typeof schema>;
+
+export async function createReservation(data: ReservationInput) {
+  const parsed = schema.parse(data);
+  console.log("Reservation submitted:", parsed);
+  return { ok: true };
+}

@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Layout } from "@/components/site/Layout";
 import { useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
 import { createReservation } from "@/lib/reservations.functions";
 import { toast } from "sonner";
 
@@ -20,22 +19,19 @@ export const Route = createFileRoute("/reservations")({
 function Reservations() {
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const submit = useServerFn(createReservation);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     setSubmitting(true);
     try {
-      await submit({
-        data: {
-          name: String(fd.get("name") || ""),
-          email: String(fd.get("email") || ""),
-          reservation_date: String(fd.get("date") || ""),
-          seating: String(fd.get("seat") || "18:30") as "18:30" | "21:00",
-          guests: Number(fd.get("guests") || 2),
-          notes: String(fd.get("notes") || "") || null,
-        },
+      await createReservation({
+        name: String(fd.get("name") || ""),
+        email: String(fd.get("email") || ""),
+        reservation_date: String(fd.get("date") || ""),
+        seating: String(fd.get("seat") || "18:30") as "18:30" | "21:00",
+        guests: Number(fd.get("guests") || 2),
+        notes: String(fd.get("notes") || "") || null,
       });
       setSent(true);
     } catch (err) {
