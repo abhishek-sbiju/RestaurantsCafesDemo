@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Layout } from "@/components/site/Layout";
 import { useState } from "react";
-// Mock server function for static build
-const useServerFn = (fn: any) => fn;
+import { useServerFn } from "@tanstack/react-start";
 import { createReservation } from "@/lib/reservations.functions";
 import { toast } from "sonner";
 
