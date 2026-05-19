@@ -28,8 +28,9 @@ function Reservations() {
       await createReservation({
         name: String(fd.get("name") || ""),
         email: String(fd.get("email") || ""),
+        phone: String(fd.get("phone") || ""),
         reservation_date: String(fd.get("date") || ""),
-        seating: String(fd.get("seat") || "18:30") as "18:30" | "21:00",
+        seating: String(fd.get("seat") || "18:30"),
         guests: Number(fd.get("guests") || 2),
         notes: String(fd.get("notes") || "") || null,
       });
@@ -69,7 +70,10 @@ function Reservations() {
           ) : (
             <div className="space-y-6">
               <Field label="Full Name"><input name="name" required type="text" className={inp} placeholder="Your name" /></Field>
-              <Field label="Email"><input name="email" required type="email" className={inp} placeholder="you@example.com" /></Field>
+              <div className="grid grid-cols-2 gap-6">
+                <Field label="Email"><input name="email" required type="email" className={inp} placeholder="you@example.com" /></Field>
+                <Field label="Phone"><input name="phone" required type="tel" className={inp} placeholder="+1 234 567 8900" /></Field>
+              </div>
               <div className="grid grid-cols-2 gap-6">
                 <Field label="Date"><input name="date" required type="date" className={inp} /></Field>
                 <Field label="Guests">
@@ -78,15 +82,8 @@ function Reservations() {
                   </select>
                 </Field>
               </div>
-              <Field label="Seating">
-                <div className="grid grid-cols-2 gap-3">
-                  <label className="border border-border p-4 cursor-pointer hover:border-gold transition-colors text-sm flex items-center gap-3">
-                    <input type="radio" name="seat" value="18:30" defaultChecked className="accent-[color:var(--gold)]" /> 18:30
-                  </label>
-                  <label className="border border-border p-4 cursor-pointer hover:border-gold transition-colors text-sm flex items-center gap-3">
-                    <input type="radio" name="seat" value="21:00" className="accent-[color:var(--gold)]" /> 21:00
-                  </label>
-                </div>
+              <Field label="Time">
+                <input type="time" name="seat" required className={inp} defaultValue="18:30" />
               </Field>
               <Field label="Notes — allergies, occasion, convictions">
                 <textarea name="notes" rows={4} className={inp} placeholder="Tell us anything that would help us prepare." />
