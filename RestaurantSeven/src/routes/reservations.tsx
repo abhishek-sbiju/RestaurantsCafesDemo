@@ -7,10 +7,10 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/reservations")({
   head: () => ({
     meta: [
-      { title: "Reservations — Verdé" },
-      { name: "description", content: "Reserve your table at Verdé. Two seatings nightly, Tuesday through Saturday." },
-      { property: "og:title", content: "Reservations — Verdé" },
-      { property: "og:description", content: "Two seatings nightly · Tuesday through Saturday." },
+      { title: "Reservations — Gulp Cocktails & Kitchen" },
+      { name: "description", content: "Reserve your table at Gulp Cocktails & Kitchen, Banashankari, Bangalore. Open daily 12 PM – 12 AM." },
+      { property: "og:title", content: "Reservations — Gulp Cocktails & Kitchen" },
+      { property: "og:description", content: "Reserve your table at Gulp. Open daily 12 PM – 12 AM." },
     ],
   }),
   component: Reservations,
@@ -30,7 +30,7 @@ function Reservations() {
         email: String(fd.get("email") || ""),
         phone: String(fd.get("phone") || ""),
         reservation_date: String(fd.get("date") || ""),
-        seating: String(fd.get("seat") || "18:30"),
+        seating: String(fd.get("seat") || "19:00"),
         guests: Number(fd.get("guests") || 2),
         notes: String(fd.get("notes") || "") || null,
       });
@@ -52,7 +52,8 @@ function Reservations() {
           <span className="italic text-gold">evening.</span>
         </h1>
         <p className="mt-6 text-muted-foreground leading-relaxed">
-          Two seatings nightly at 18:30 and 21:00. We confirm by email within 24 hours.
+          Walk-ins welcome. For larger parties or special celebrations, we recommend booking ahead.
+          We'll confirm by call or email within a few hours.
         </p>
       </section>
 
@@ -63,30 +64,30 @@ function Reservations() {
         >
           {sent ? (
             <div className="py-20 text-center">
-              <div className="eyebrow">— Merci</div>
+              <div className="eyebrow">— Thank You</div>
               <h2 className="display mt-6 text-4xl">Your request is in.</h2>
-              <p className="mt-4 text-muted-foreground">We'll confirm by email within 24 hours.</p>
+              <p className="mt-4 text-muted-foreground">We'll confirm your reservation shortly via call or email.</p>
             </div>
           ) : (
             <div className="space-y-6">
               <Field label="Full Name"><input name="name" required type="text" className={inp} placeholder="Your name" /></Field>
               <div className="grid grid-cols-2 gap-6">
                 <Field label="Email"><input name="email" required type="email" className={inp} placeholder="you@example.com" /></Field>
-                <Field label="Phone"><input name="phone" required type="tel" className={inp} placeholder="+1 234 567 8900" /></Field>
+                <Field label="Phone"><input name="phone" required type="tel" className={inp} placeholder="+91 98765 43210" /></Field>
               </div>
               <div className="grid grid-cols-2 gap-6">
                 <Field label="Date"><input name="date" required type="date" className={inp} /></Field>
                 <Field label="Guests">
                   <select name="guests" className={inp} defaultValue="2">
-                    {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={n}>{n} {n===1?"guest":"guests"}</option>)}
+                    {[1,2,3,4,5,6,7,8,10,12,15,20].map(n => <option key={n} value={n}>{n} {n===1?"guest":"guests"}</option>)}
                   </select>
                 </Field>
               </div>
-              <Field label="Time">
-                <input type="time" name="seat" required className={inp} defaultValue="18:30" />
+              <Field label="Preferred Time">
+                <input type="time" name="seat" required className={inp} defaultValue="19:00" />
               </Field>
-              <Field label="Notes — allergies, occasion, convictions">
-                <textarea name="notes" rows={4} className={inp} placeholder="Tell us anything that would help us prepare." />
+              <Field label="Notes — occasion, dietary needs, special requests">
+                <textarea name="notes" rows={4} className={inp} placeholder="Birthday celebration, anniversary, dietary preferences, etc." />
               </Field>
               <button type="submit" disabled={submitting} className="btn-gold w-full disabled:opacity-60">
                 {submitting ? "Sending…" : "Request Reservation"}
@@ -99,30 +100,31 @@ function Reservations() {
           <div>
             <div className="eyebrow">— Visit</div>
             <p className="mt-4 display text-2xl leading-snug">
-              14 Rue des Jardins<br/>75004 Paris
+              16, Outer Ring Road<br/>Banashankari, Bangalore
             </p>
-            <p className="mt-3 text-sm text-muted-foreground">Métro · Saint-Paul (Line 1)</p>
+            <p className="mt-3 text-sm text-muted-foreground">Beside Domino's · 3rd Phase, BSK 560085</p>
           </div>
           <div>
             <div className="eyebrow">— Contact</div>
             <p className="mt-4 text-sm leading-relaxed">
-              <a href="tel:+33142000000" className="link-underline">+33 1 42 00 00 00</a><br/>
-              <a href="mailto:reserve@verde.paris" className="link-underline">reserve@verde.paris</a>
+              <a href="tel:+919845967899" className="link-underline">+91 98459 67899</a><br/>
+              <a href="https://instagram.com/gulpcocktails_blr" target="_blank" rel="noopener noreferrer" className="link-underline">@gulpcocktails_blr</a>
             </p>
           </div>
           <div>
-            <div className="eyebrow">— Service</div>
+            <div className="eyebrow">— Hours</div>
             <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
-              Tuesday – Saturday<br/>
-              Dinner only · 18:30 – 22:30<br/>
-              Closed Sunday & Monday
+              Open Daily<br/>
+              12:00 PM – 12:00 AM<br/>
+              Kitchen & Bar · Full service
             </p>
           </div>
           <div className="border-t border-border pt-8">
             <div className="eyebrow">— Private Events</div>
             <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
-              For full buy-outs, weddings, and corporate gatherings, please write to{" "}
-              <a href="mailto:events@verde.paris" className="text-gold link-underline">events@verde.paris</a>.
+              For corporate parties, birthdays, anniversaries, farewells, and large group bookings,
+              please call us directly at{" "}
+              <a href="tel:+919845967899" className="text-gold link-underline">+91 98459 67899</a>.
             </p>
           </div>
         </aside>

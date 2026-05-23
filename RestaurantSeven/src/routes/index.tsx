@@ -1,68 +1,102 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/site/Layout";
-import heroDish from "@/assets/hero-dish.jpg";
-import interior from "@/assets/interior.jpg";
-import chef from "@/assets/chef.jpg";
-import dish2 from "@/assets/dish-2.jpg";
+import heroCoconut from "@/assets/imagetwo.jpg";
+import barInterior from "@/assets/2025-10-01.jpg";
+import espressoMartini from "@/assets/imagethree.jpg";
+import ghostRider from "@/assets/imageone.jpg";
+import { useState, useEffect } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Verdé — Botanical Fine Dining in Paris" },
-      { name: "description", content: "A seasonal tasting menu rooted in the garden. Verdé is an intimate fine-dining experience in the heart of Paris." },
-      { property: "og:title", content: "Verdé — Botanical Fine Dining" },
-      { property: "og:description", content: "A seasonal tasting menu rooted in the garden." },
+      { title: "Gulp Cocktails & Kitchen — Theatrical Dining & Lounge in Bangalore" },
+      { name: "description", content: "Experience dramatic tableside mixology, signature cocktails, local fusion Naati flavors, and vibrant DJ nights at Gulp Cocktails & Kitchen, Banashankari." },
+      { property: "og:title", content: "Gulp Cocktails & Kitchen" },
+      { property: "og:description", content: "Theatrical cocktails, creative mixology, and vibrant nightlife in Banashankari, Bangalore." },
     ],
   }),
   component: Index,
 });
 
+const heroSlides = [
+  { src: ghostRider, alt: "The signature Ghost Rider skull cocktail", eyebrow: "Signature Serve", title: "The Ghost Rider" },
+  { src: heroCoconut, alt: "Branded Gulp coconut cocktail", eyebrow: "Signature Serve", title: "Tropical Coconut" },
+  { src: espressoMartini, alt: "Premium espresso martini", eyebrow: "Classic Craft", title: "Gold Espresso Martini" }
+];
+
+function HeroSlideshow() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <>
+      {heroSlides.map((slide, index) => (
+        <div
+          key={slide.src}
+          className={`absolute inset-0 transition-opacity duration-1000 ${
+            index === current ? "opacity-100 z-0" : "opacity-0 -z-10"
+          }`}
+        >
+          <img
+            src={slide.src}
+            alt={slide.alt}
+            className={`absolute inset-0 h-full w-full object-cover transition-transform duration-[7000ms] ease-out ${
+              index === current ? "scale-110" : "scale-100"
+            }`}
+          />
+        </div>
+      ))}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30 z-10 pointer-events-none" />
+      <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-left z-20">
+        <div className="eyebrow text-gold drop-shadow-md">{heroSlides[current].eyebrow}</div>
+        <div className="display text-2xl md:text-3xl mt-1 text-white drop-shadow-lg">{heroSlides[current].title}</div>
+      </div>
+    </>
+  );
+}
+
 function Index() {
   return (
     <Layout>
       {/* SPLIT HERO */}
-      <section className="relative min-h-screen grid md:grid-cols-[1.05fr_1fr]">
-        <div className="relative flex items-center px-6 md:px-16 lg:px-24 pt-32 pb-20">
+      <section className="relative min-h-screen flex flex-col md:grid md:grid-cols-[1.05fr_1fr]">
+        <div className="relative flex px-6 md:px-12 lg:px-20 pt-24 md:pt-28 pb-10 md:pb-16 order-2 md:order-1 items-start">
           <div className="absolute inset-0 -z-10" style={{ background: "var(--gradient-emerald)" }} />
-          <div className="fade-up max-w-xl">
+          <div className="fade-up max-w-xl w-full mt-2">
             <div className="eyebrow flex items-center">
-              <span>Est. 2014</span><span className="rule" /><span>Paris IV</span>
+              <span>Cocktails & Kitchen</span><span className="rule" /><span>Bangalore</span>
             </div>
-            <h1 className="display mt-8 text-6xl md:text-7xl lg:text-8xl">
-              Of the<br/>
-              <span className="italic text-gold">garden,</span><br/>
-              for the table.
+            <h1 className="display mt-5 md:mt-6 text-5xl md:text-6xl lg:text-7xl leading-[1.05]">
+              Audacious<br/>
+              cocktails.<br/>
+              <span className="italic text-gold">Unforgettable</span><br/>nights.
             </h1>
-            <p className="mt-8 text-base md:text-lg text-muted-foreground leading-relaxed max-w-md">
-              A seven-course botanical tasting menu by Chef Élise Marchand,
-              composed each morning from the day's harvest.
+            <p className="mt-5 text-sm md:text-base text-muted-foreground leading-relaxed max-w-md">
+              Bangalore's most theatrical cocktail kitchen & bar. Experience dramatic
+              tableside spectacles, creative mixology, and a soulful fusion of local
+              Naati flavors on Outer Ring Road, Banashankari.
             </p>
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-wrap gap-3">
               <Link to="/reservations" className="btn-gold">Reserve a Table</Link>
               <Link to="/menu" className="btn-ghost">View the Menu</Link>
             </div>
 
-            <div className="mt-16 grid grid-cols-3 gap-6 max-w-md border-t border-border pt-8">
-              <Stat n="II" l="Michelin Stars" />
-              <Stat n="7" l="Courses Nightly" />
-              <Stat n="22" l="Seats Only" />
+            <div className="mt-8 md:mt-10 grid grid-cols-3 gap-4 max-w-md border-t border-border pt-6">
+              <Stat n="#1" l="Cocktail Spot in BSK" />
+              <Stat n="15+" l="Theatrical Signatures" />
+              <Stat n="DJ" l="Beats Nightly" />
             </div>
           </div>
         </div>
 
-        <div className="relative min-h-[60vh] md:min-h-screen overflow-hidden">
-          <img
-            src={heroDish}
-            alt="Plated tasting course on emerald linen with gold cutlery"
-            width={1280}
-            height={1600}
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
-          <div className="absolute bottom-8 right-8 text-right">
-            <div className="eyebrow text-cream/70">Tonight's Opening</div>
-            <div className="display text-2xl mt-1">Smoked beetroot · Hazelnut · Sorrel</div>
-          </div>
+        <div className="relative min-h-[55vh] md:min-h-screen overflow-hidden bg-black order-1 md:order-2">
+          <HeroSlideshow />
         </div>
       </section>
 
@@ -72,55 +106,58 @@ function Index() {
           <div className="md:col-span-5">
             <div className="eyebrow">— Our Ethos</div>
             <h2 className="display mt-6 text-5xl md:text-6xl">
-              We don't write<br/>menus.<br/>
-              <span className="italic text-gold">We listen</span><br/>to seasons.
+              We don't just<br/>pour drinks.<br/>
+              <span className="italic text-gold">We orchestrate</span><br/>spectacles.
             </h2>
           </div>
           <div className="md:col-span-6 md:col-start-7 space-y-6 text-muted-foreground leading-relaxed">
             <p>
-              Every plate begins at dawn in our biodynamic garden in Île-de-France.
-              What is ready is what is served. Nothing more, nothing less.
+              From flaming chocolate skulls to smoke-infused botanical cocktails,
+              every drink at Gulp is designed to be a complete sensory performance.
+              We believe in visual theatre, creative presentation, and bold flavour
+              experiences that linger long after the last sip.
             </p>
             <p>
-              The result is a quiet, deliberate cuisine — built on root vegetables,
-              cold-water fish, wild herbs, and slow ferments. A cooking that
-              prefers restraint to spectacle.
+              Our kitchen elevates the night with an eclectic menu that beautifully
+              marries rich, rustic local Bangalore 'Naati' flavours with contemporary
+              global plates — from tandoor-kissed starters to delicate Continental mains.
             </p>
             <Link to="/about" className="inline-flex items-center gap-3 text-gold link-underline text-sm tracking-[0.2em] uppercase">
-              Read the story →
+              Read our story →
             </Link>
           </div>
         </div>
       </section>
 
-      {/* IMAGE FEATURE */}
+      {/* THE SPACE — real bar interior */}
       <section className="grid md:grid-cols-2">
         <div className="relative aspect-[4/5] md:aspect-auto">
-          <img src={interior} alt="Verdé dining room with emerald banquettes" width={1600} height={1200} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+          <img src={barInterior} alt="Gulp Cocktails & Kitchen bar interior with illuminated capsule bottle shelves, the iconic G logo, gold chevron tile bar front and teal velvet seating" width={1600} height={1200} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
         </div>
         <div className="bg-card flex items-center px-8 md:px-16 lg:px-24 py-20">
           <div className="max-w-md">
-            <div className="eyebrow">— The Room</div>
+            <div className="eyebrow">— The Space</div>
             <h3 className="display mt-6 text-4xl md:text-5xl">
-              Twenty-two seats.<br/>
-              <span className="italic text-gold">One conversation.</span>
+              Where gold<br/>
+              meets <span className="italic text-gold">velvet.</span>
             </h3>
             <p className="mt-6 text-muted-foreground leading-relaxed">
-              An emerald velvet banquette curves around the open kitchen.
-              Candlelight. Brass. The quiet clatter of copper. A room designed
-              to disappear so the food can speak.
+              A warm, glamorous sanctuary featuring illuminated capsule bar shelves,
+              gold-toned chevron tile accents, plush teal velvet seating, and the
+              iconic glowing "G" centerpiece. Backed by our resident DJ, Gulp provides
+              the perfect setting for celebrations, group parties, and unforgettable nights.
             </p>
-            <Link to="/reservations" className="btn-gold mt-10">Book the Room</Link>
+            <Link to="/reservations" className="btn-gold mt-10">Reserve a Table</Link>
           </div>
         </div>
       </section>
 
-      {/* SIGNATURE COURSES */}
+      {/* SIGNATURE COCKTAILS */}
       <section className="mx-auto max-w-[1400px] px-6 md:px-10 py-32">
         <div className="flex items-end justify-between flex-wrap gap-6 mb-16">
           <div>
             <div className="eyebrow">— Signatures</div>
-            <h2 className="display mt-4 text-5xl md:text-6xl">A taste of the season</h2>
+            <h2 className="display mt-4 text-5xl md:text-6xl">The showstoppers</h2>
           </div>
           <Link to="/menu" className="text-sm tracking-[0.22em] uppercase text-gold link-underline">
             Full Menu →
@@ -130,61 +167,71 @@ function Index() {
         <div className="grid md:grid-cols-3 gap-px bg-border">
           <Course
             n="01"
-            name="Smoked Beetroot"
-            desc="Burnt hay · aged hazelnut · sheep's milk · sorrel oil"
+            name="Ghost Rider"
+            desc="A crystal skull glass filled with rich chocolate cocktail, topped with crushed ice and cocoa powder dusted tableside. Dark rum, bitter chocolate, aromatic bitters."
           />
           <Course
             n="02"
-            name="Turbot · Pine"
-            desc="Line-caught Brittany turbot, douglas fir butter, salt-baked celeriac"
+            name="Tropical Coconut"
+            desc="Signature serve in a branded whole coconut shell, garnished with fresh bougainvillea, dried pineapple, and tropical rum blended with coconut cream."
           />
           <Course
             n="03"
-            name="Black Honey"
-            desc="Buckwheat ice cream, charred plum, bee pollen, beeswax tuile"
+            name="Gold Espresso Martini"
+            desc="Velvety smooth espresso meets premium vodka, finished with a perfect golden crema. Served in a crystal coupe alongside gold barware."
           />
         </div>
       </section>
 
-      {/* CHEF QUOTE */}
+      {/* MIXOLOGY QUOTE — espresso martini editorial */}
       <section className="grid md:grid-cols-[1fr_1.1fr] items-stretch">
         <div className="bg-secondary flex items-center px-8 md:px-16 lg:px-24 py-24">
           <div className="max-w-md">
-            <div className="eyebrow">— Chef Élise Marchand</div>
+            <div className="eyebrow">— The Art of Mixology</div>
             <blockquote className="display mt-8 text-3xl md:text-4xl leading-tight italic">
-              "I'd rather serve one quiet, honest carrot than ten loud things
-              pretending to be cuisine."
+              "A great cocktail is a complete sensory narrative — the colours,
+              the fire, the aroma, and the beats all speak the same language."
             </blockquote>
             <div className="mt-10 text-sm tracking-[0.22em] uppercase text-muted-foreground">
-              Élise Marchand · Chef Patron
+              Gulp Mixology Team · Liquid Gastronomy
             </div>
           </div>
         </div>
         <div className="relative aspect-[4/5] md:aspect-auto">
-          <img src={chef} alt="Chef Élise Marchand plating with tweezers" width={1200} height={1500} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+          <img src={espressoMartini} alt="Premium espresso martini in a crystal coupe glass with perfect golden crema, alongside gold jigger and mixing glass on marble" width={1200} height={1500} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
         </div>
       </section>
 
-      {/* PRESS */}
+      {/* PRAISE */}
       <section className="mx-auto max-w-[1400px] px-6 md:px-10 py-32 text-center">
         <div className="eyebrow">— Praise</div>
         <div className="mt-10 grid md:grid-cols-3 gap-12 text-muted-foreground">
-          <Quote q="Whisper-quiet brilliance." s="Le Monde" />
-          <Quote q="The most considered cooking in Paris this year." s="The World's 50 Best" />
-          <Quote q="A garden poured onto a plate." s="Vogue France" />
+          <Quote q="The most aesthetic and theatrical cocktails in Banashankari." s="Curly Tales" />
+          <Quote q="Incredible lounge energy, great music, and highly Instagram-worthy presentation." s="LBB Bangalore" />
+          <Quote q="A phenomenal fusion of Naati soul food and creative liquid alchemy." s="Zomato Gold Reviewer" />
         </div>
       </section>
 
       {/* CTA */}
-      <section className="relative overflow-hidden">
-        <img src={dish2} alt="Floral dessert" width={1200} height={1500} loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-40" />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, var(--background) 0%, transparent 50%, var(--background) 100%)" }} />
-        <div className="relative mx-auto max-w-3xl px-6 py-32 md:py-48 text-center">
-          <div className="eyebrow">— Reservations</div>
-          <h2 className="display mt-6 text-5xl md:text-7xl">
-            Join us for an<br/><span className="italic text-gold">unhurried evening.</span>
+      <section className="relative overflow-hidden min-h-[480px]">
+        {/* Bar interior — subtle blur, not killed */}
+        <img
+          src={barInterior}
+          alt="Gulp Cocktails bar interior"
+          width={1600}
+          height={900}
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover object-center scale-105"
+          style={{ filter: "blur(3px)" }}
+        />
+        {/* Moderate scrim for text legibility */}
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative mx-auto max-w-3xl px-6 py-32 md:py-44 text-center z-10">
+          <div className="eyebrow text-gold/80">— Reservations</div>
+          <h2 className="display mt-6 text-5xl md:text-7xl text-white">
+            Join us for a<br/><span className="italic text-gold">theatrical night.</span>
           </h2>
-          <p className="mt-6 text-muted-foreground">Two seatings nightly · Tuesday through Saturday</p>
+          <p className="mt-6 text-white/70">Open daily · 12:00 PM to 12:00 AM · Banashankari, Bangalore</p>
           <Link to="/reservations" className="btn-gold mt-10">Reserve a Table</Link>
         </div>
       </section>

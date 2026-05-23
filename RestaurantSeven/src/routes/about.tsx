@@ -1,15 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Layout } from "@/components/site/Layout";
-import chef from "@/assets/chef.jpg";
-import interior from "@/assets/interior.jpg";
+import espressoMartini from "@/assets/imagethree.jpg";
+import barInterior from "@/assets/2025-10-01.jpg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "Our Story — Verdé" },
-      { name: "description", content: "The story of Verdé and Chef Élise Marchand — a decade of botanical, seasonal cooking in Paris." },
-      { property: "og:title", content: "Our Story — Verdé" },
-      { property: "og:description", content: "A decade of botanical, seasonal cooking in Paris." },
+      { title: "Our Story — Gulp Cocktails & Kitchen" },
+      { name: "description", content: "The story behind Gulp Cocktails & Kitchen — Bangalore's most theatrical cocktail destination on Outer Ring Road, Banashankari." },
+      { property: "og:title", content: "Our Story — Gulp Cocktails & Kitchen" },
+      { property: "og:description", content: "Bangalore's most theatrical cocktail destination." },
     ],
   }),
   component: AboutPage,
@@ -19,30 +19,32 @@ function AboutPage() {
   return (
     <Layout>
       <section className="pt-40 pb-24 px-6 max-w-4xl mx-auto text-center">
-        <div className="eyebrow">— Since 2014</div>
+        <div className="eyebrow">— Cocktails & Kitchen</div>
         <h1 className="display mt-6 text-6xl md:text-8xl">
-          A quiet cuisine,<br/>
-          <span className="italic text-gold">rooted in soil.</span>
+          Born from a love of<br/>
+          <span className="italic text-gold">bold flavours.</span>
         </h1>
       </section>
 
       <section className="mx-auto max-w-[1400px] px-6 md:px-10 grid md:grid-cols-2 gap-16 items-center pb-24">
         <div className="aspect-[4/5] overflow-hidden">
-          <img src={chef} alt="Chef Élise Marchand" width={1200} height={1500} loading="lazy" className="h-full w-full object-cover" />
+          <img src={espressoMartini} alt="Premium espresso martini — a symbol of Gulp's mixology craft" width={1200} height={1500} loading="lazy" className="h-full w-full object-cover" />
         </div>
         <div>
-          <div className="eyebrow">— Élise Marchand</div>
-          <h2 className="display mt-6 text-4xl md:text-5xl">From a hedgerow in Normandy.</h2>
+          <div className="eyebrow">— The Beginning</div>
+          <h2 className="display mt-6 text-4xl md:text-5xl">From a simple idea to Bangalore's cocktail stage.</h2>
           <div className="mt-8 space-y-5 text-muted-foreground leading-relaxed">
             <p>
-              Élise grew up between her grandmother's kitchen and a wild
-              hedgerow at the edge of a Normandy farm. She trained at L'Arpège
-              and Mirazur before opening Verdé in 2014 with a single conviction:
-              that restraint is the most generous thing a cook can offer.
+              Gulp was born from a conviction that a night out should be more than
+              just food and drinks — it should be an experience. We wanted to create
+              a space where every cocktail tells a story, every plate carries soul,
+              and every evening becomes a memory worth sharing.
             </p>
             <p>
-              Today, Verdé holds two Michelin stars and a Green Star for sustainability.
-              Élise still walks the garden every morning before service.
+              From our home on Outer Ring Road in Banashankari, we've built a reputation
+              for theatrical presentation, creative mixology, and a kitchen that fearlessly
+              blends rich local Bangalore 'Naati' flavours with global culinary traditions.
+              Today, Gulp is one of the most loved cocktail destinations in South Bangalore.
             </p>
           </div>
         </div>
@@ -50,28 +52,27 @@ function AboutPage() {
 
       <section className="bg-card">
         <div className="mx-auto max-w-[1400px] px-6 md:px-10 py-24 grid md:grid-cols-3 gap-12">
-          <Pillar n="01" t="The Garden" d="Three hectares of biodynamic kitchen garden in Île-de-France. 140 varietals, most heirloom, all cultivated for flavour over yield." />
-          <Pillar n="02" t="The Network" d="Day-boat fishermen in Brittany, foragers in the Morvan, a single butter-maker in the Pays Basque. We know every supplier by name." />
-          <Pillar n="03" t="The Room" d="22 seats, an open kitchen, no music. The conversation between dish and diner is what we serve." />
+          <Pillar n="01" t="The Craft" d="Every cocktail is a performance piece. From flaming skulls to branded coconut serves and smoke-infused botanicals — we push the boundaries of what a drink can be." />
+          <Pillar n="02" t="The Kitchen" d="A soulful fusion of rich Mangalorean ghee roasts, tandoor-kissed starters, Continental mains, and Chinese favourites — all designed to complement the bar." />
+          <Pillar n="03" t="The Stage" d="In-house DJ, golden lounge lighting, botanical walls, and velvet seating. Every element is curated to create the perfect atmosphere for an unforgettable night." />
         </div>
       </section>
 
       <section className="mx-auto max-w-[1400px] px-6 md:px-10 py-24 grid md:grid-cols-[1.2fr_1fr] gap-16 items-center">
         <div className="aspect-[4/3] overflow-hidden">
-          <img src={interior} alt="The Verdé dining room" width={1600} height={1200} loading="lazy" className="h-full w-full object-cover" />
+          <img src={barInterior} alt="Gulp bar interior with the iconic G logo and illuminated bottle shelves" width={1600} height={1200} loading="lazy" className="h-full w-full object-cover" />
         </div>
         <div>
-          <div className="eyebrow">— Accolades</div>
+          <div className="eyebrow">— Milestones</div>
           <ul className="mt-8 divide-y divide-border border-t border-b border-border">
             {[
-              ["2024", "World's 50 Best · No. 27"],
-              ["2023", "Michelin · Second Star"],
-              ["2022", "Michelin · Green Star, Sustainability"],
-              ["2019", "Gault & Millau · Chef of the Year"],
-              ["2017", "Michelin · First Star"],
-              ["2014", "Verdé opens · Paris IV"],
-            ].map(([y, t]) => (
-              <li key={y} className="py-5 flex justify-between items-baseline gap-6">
+              ["2025", "Rated 4.2★ — 5,000+ reviews across platforms"],
+              ["2025", "Featured on Curly Tales Bangalore"],
+              ["2024", "In-house DJ residency launches"],
+              ["2024", "Signature Ghost Rider goes viral on Instagram"],
+              ["2023", "Gulp Cocktails & Kitchen opens — Banashankari"],
+            ].map(([y, t], i) => (
+              <li key={i} className="py-5 flex justify-between items-baseline gap-6">
                 <span className="display text-2xl text-gold">{y}</span>
                 <span className="text-sm md:text-base text-muted-foreground text-right">{t}</span>
               </li>

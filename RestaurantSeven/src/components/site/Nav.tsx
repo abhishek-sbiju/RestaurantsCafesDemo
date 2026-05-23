@@ -25,7 +25,7 @@ export function Nav() {
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 flex items-center justify-between">
         <Link to="/" className="display text-2xl tracking-tight">
-          Verd<span className="text-gold">é</span>
+          Gul<span className="text-gold">p</span>
         </Link>
         <nav className="hidden md:flex items-center gap-10">
           {links.map((l) => (
