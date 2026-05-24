@@ -26,36 +26,61 @@ const heroSlides = [
 
 function HeroSlideshow() {
   const [current, setCurrent] = useState(0);
+  const [prev, setPrev] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    const t = setTimeout(() => setMounted(true), 50);
     const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % heroSlides.length);
+      setCurrent((c) => {
+        setPrev(c);
+        return (c + 1) % heroSlides.length;
+      });
     }, 5000);
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+      clearTimeout(t);
+    };
   }, []);
 
   return (
     <>
-      {heroSlides.map((slide, index) => (
-        <div
-          key={slide.src}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === current ? "opacity-100 z-0" : "opacity-0 -z-10"
-          }`}
-        >
-          <img
-            src={slide.src}
-            alt={slide.alt}
-            className={`absolute inset-0 h-full w-full object-cover transition-transform duration-[7000ms] ease-out ${
-              index === current ? "scale-110" : "scale-100"
+      {heroSlides.map((slide, index) => {
+        const isActive = index === current;
+        const isPrev = index === prev && prev !== current;
+        return (
+          <div
+            key={slide.src}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              isActive ? "opacity-100 z-30" : isPrev ? "opacity-100 z-20" : "opacity-0 z-10"
             }`}
-          />
-        </div>
-      ))}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30 z-10 pointer-events-none" />
-      <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-left z-20">
-        <div className="eyebrow text-gold drop-shadow-md">{heroSlides[current].eyebrow}</div>
-        <div className="display text-2xl md:text-3xl mt-1 text-white drop-shadow-lg">{heroSlides[current].title}</div>
+          >
+            <img
+              src={slide.src}
+              alt={slide.alt}
+              className={`absolute inset-0 h-full w-full object-cover transition-transform duration-[7000ms] ease-out ${
+                (isActive || isPrev) && mounted ? "scale-110" : "scale-100"
+              }`}
+            />
+          </div>
+        );
+      })}
+      <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent z-40 pointer-events-none" />
+      <div className="absolute bottom-8 right-8 text-right z-50">
+        {heroSlides.map((slide, index) => {
+          const isActive = index === current;
+          return (
+            <div
+              key={slide.title}
+              className={`absolute bottom-0 right-0 w-max transition-opacity duration-1000 ease-in-out ${
+                isActive ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <div className="eyebrow text-cream/70">{slide.eyebrow}</div>
+              <div className="display text-2xl mt-1">{slide.title}</div>
+            </div>
+          );
+        })}
       </div>
     </>
   );
@@ -83,7 +108,7 @@ function Index() {
               Naati flavors on Outer Ring Road, Banashankari.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link to="/reservations" className="btn-gold">Reserve a Table</Link>
+              <Link to="/reservations" hash="booking-form" className="btn-gold">Reserve a Table</Link>
               <Link to="/menu" className="btn-ghost">View the Menu</Link>
             </div>
 
@@ -147,7 +172,7 @@ function Index() {
               iconic glowing "G" centerpiece. Backed by our resident DJ, Gulp provides
               the perfect setting for celebrations, group parties, and unforgettable nights.
             </p>
-            <Link to="/reservations" className="btn-gold mt-10">Reserve a Table</Link>
+            <Link to="/reservations" hash="booking-form" className="btn-gold mt-10">Reserve a Table</Link>
           </div>
         </div>
       </section>
@@ -213,7 +238,7 @@ function Index() {
       </section>
 
       {/* CTA */}
-      <section className="relative overflow-hidden min-h-[480px]">
+      <section className="relative overflow-hidden bg-background min-h-[480px]">
         {/* Bar interior — subtle blur, not killed */}
         <img
           src={barInterior}
@@ -221,18 +246,19 @@ function Index() {
           width={1600}
           height={900}
           loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover object-center scale-105"
-          style={{ filter: "blur(3px)" }}
+          className="absolute inset-0 h-full w-full object-cover object-center scale-105 opacity-20 blur-sm ken-burns"
         />
-        {/* Moderate scrim for text legibility */}
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="relative mx-auto max-w-3xl px-6 py-32 md:py-44 text-center z-10">
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background h-32 z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-l from-background via-transparent to-background w-32 left-auto right-0 z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background w-32 z-10 pointer-events-none" />
+        <div className="relative z-20 mx-auto max-w-3xl px-6 py-32 md:py-44 text-center">
           <div className="eyebrow text-gold/80">— Reservations</div>
           <h2 className="display mt-6 text-5xl md:text-7xl text-white">
             Join us for a<br/><span className="italic text-gold">theatrical night.</span>
           </h2>
           <p className="mt-6 text-white/70">Open daily · 12:00 PM to 12:00 AM · Banashankari, Bangalore</p>
-          <Link to="/reservations" className="btn-gold mt-10">Reserve a Table</Link>
+          <Link to="/reservations" hash="booking-form" className="btn-gold mt-10">Reserve a Table</Link>
         </div>
       </section>
     </Layout>

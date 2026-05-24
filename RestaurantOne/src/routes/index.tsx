@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/site/Layout";
+import { useEffect, useState } from "react";
 import heroDish from "@/assets/hero-dish.jpg";
 import interior from "@/assets/interior.jpg";
 import chef from "@/assets/chef.jpg";
@@ -16,6 +17,95 @@ export const Route = createFileRoute("/")({
   }),
   component: Index,
 });
+
+const heroSlides = [
+  {
+    src: heroDish,
+    alt: "Plated tasting course on emerald linen with gold cutlery",
+    eyebrow: "Tonight's Opening",
+    title: "Smoked beetroot · Hazelnut · Sorrel",
+  },
+  {
+    src: interior,
+    alt: "Verdé dining room with emerald banquettes",
+    eyebrow: "The Room",
+    title: "Twenty-two seats. One conversation.",
+  },
+  {
+    src: chef,
+    alt: "Chef Élise Marchand",
+    eyebrow: "Chef Patron",
+    title: "Élise Marchand",
+  },
+  {
+    src: dish2,
+    alt: "Floral dessert",
+    eyebrow: "Signatures",
+    title: "A taste of the season",
+  },
+];
+
+function HeroSlideshow() {
+  const [current, setCurrent] = useState(0);
+  const [prev, setPrev] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setMounted(true), 50);
+    const timer = setInterval(() => {
+      setCurrent((c) => {
+        setPrev(c);
+        return (c + 1) % heroSlides.length;
+      });
+    }, 5000);
+    return () => {
+      clearInterval(timer);
+      clearTimeout(t);
+    };
+  }, []);
+
+  return (
+    <>
+      {heroSlides.map((slide, index) => {
+        const isActive = index === current;
+        const isPrev = index === prev && prev !== current;
+        return (
+          <div
+            key={slide.src}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              isActive ? "opacity-100 z-30" : isPrev ? "opacity-100 z-20" : "opacity-0 z-10"
+            }`}
+          >
+            <img
+              src={slide.src}
+              alt={slide.alt}
+              className={`absolute inset-0 h-full w-full object-cover transition-transform duration-[7000ms] ease-out ${
+                (isActive || isPrev) && mounted ? "scale-110" : "scale-100"
+              }`}
+            />
+          </div>
+        );
+      })}
+      <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent z-40 pointer-events-none" />
+      <div className="absolute bottom-8 right-8 text-right z-50">
+        {heroSlides.map((slide, index) => {
+          const isActive = index === current;
+          return (
+            <div
+              key={slide.title}
+              className={`absolute bottom-0 right-0 w-max transition-opacity duration-1000 ease-in-out ${
+                isActive ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <div className="eyebrow text-cream/70">{slide.eyebrow}</div>
+              <div className="display text-2xl mt-1">{slide.title}</div>
+            </div>
+          );
+        })}
+      </div>
+    </>
+  );
+}
 
 function Index() {
   return (
@@ -38,7 +128,7 @@ function Index() {
               composed each morning from the day's harvest.
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
-              <Link to="/reservations" className="btn-gold">Reserve a Table</Link>
+              <Link to="/reservations" hash="booking-form" className="btn-gold">Reserve a Table</Link>
               <Link to="/menu" className="btn-ghost">View the Menu</Link>
             </div>
 
@@ -51,18 +141,7 @@ function Index() {
         </div>
 
         <div className="relative min-h-[60vh] md:min-h-screen overflow-hidden">
-          <img
-            src={heroDish}
-            alt="Plated tasting course on emerald linen with gold cutlery"
-            width={1280}
-            height={1600}
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
-          <div className="absolute bottom-8 right-8 text-right">
-            <div className="eyebrow text-cream/70">Tonight's Opening</div>
-            <div className="display text-2xl mt-1">Smoked beetroot · Hazelnut · Sorrel</div>
-          </div>
+          <HeroSlideshow />
         </div>
       </section>
 
@@ -110,7 +189,7 @@ function Index() {
               Candlelight. Brass. The quiet clatter of copper. A room designed
               to disappear so the food can speak.
             </p>
-            <Link to="/reservations" className="btn-gold mt-10">Book the Room</Link>
+            <Link to="/reservations" hash="booking-form" className="btn-gold mt-10">Book the Room</Link>
           </div>
         </div>
       </section>
@@ -176,16 +255,19 @@ function Index() {
       </section>
 
       {/* CTA */}
-      <section className="relative overflow-hidden">
-        <img src={dish2} alt="Floral dessert" width={1200} height={1500} loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-40" />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, var(--background) 0%, transparent 50%, var(--background) 100%)" }} />
-        <div className="relative mx-auto max-w-3xl px-6 py-32 md:py-48 text-center">
+      <section className="relative overflow-hidden bg-background">
+        <img src={dish2} alt="Floral dessert" width={1200} height={1500} loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-20 blur-sm ken-burns" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background h-32 z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-l from-background via-transparent to-background w-32 left-auto right-0 z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background w-32 z-10 pointer-events-none" />
+        <div className="relative z-20 mx-auto max-w-3xl px-6 py-32 md:py-48 text-center">
           <div className="eyebrow">— Reservations</div>
           <h2 className="display mt-6 text-5xl md:text-7xl">
             Join us for an<br/><span className="italic text-gold">unhurried evening.</span>
           </h2>
           <p className="mt-6 text-muted-foreground">Two seatings nightly · Tuesday through Saturday</p>
-          <Link to="/reservations" className="btn-gold mt-10">Reserve a Table</Link>
+          <Link to="/reservations" hash="booking-form" className="btn-gold mt-10">Reserve a Table</Link>
         </div>
       </section>
     </Layout>

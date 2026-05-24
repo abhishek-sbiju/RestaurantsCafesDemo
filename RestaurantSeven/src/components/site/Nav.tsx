@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 const links = [
   { to: "/", label: "Home" },
   { to: "/menu", label: "Menu" },
+  { to: "/gallery", label: "Gallery" },
   { to: "/about", label: "Story" },
   { to: "/reservations", label: "Reserve" },
 ] as const;

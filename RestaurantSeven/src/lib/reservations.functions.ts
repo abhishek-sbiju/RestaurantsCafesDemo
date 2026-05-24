@@ -5,9 +5,9 @@ const schema = z.object({
   name: z.string().min(1).max(120),
   email: z.string().email().max(200),
   phone: z.string().min(5).max(50),
-  reservation_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-  seating: z.enum(["18:30", "21:00"]),
-  guests: z.number().int().min(1).max(12),
+  reservation_date: z.string().min(1),
+  seating: z.string().min(1),
+  guests: z.number().int().min(1).max(50),
   notes: z.string().max(1000).optional().nullable(),
 });
 
